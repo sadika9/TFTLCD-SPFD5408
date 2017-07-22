@@ -1,3 +1,6 @@
+**Note:**
+* Modified to work with SPFD5408 - based on https://github.com/JoaoLopesF/SPFD5408 *
+
 This is a library for the Adafruit 2.8" TFT display.
 This library works with the Adafruit 2.8" TFT Breakout w/SD card
   ----> http://www.adafruit.com/products/335
