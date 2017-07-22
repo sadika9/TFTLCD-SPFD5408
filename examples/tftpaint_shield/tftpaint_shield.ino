@@ -2,7 +2,7 @@
 // If using the breakout board, use the tftpaint.pde sketch instead!
 
 #include <Adafruit_GFX.h>    // Core graphics library
-#include <Adafruit_TFTLCD.h> // Hardware-specific library
+#include <TftSpfd5408.h> // Hardware-specific library
 #include <TouchScreen.h>
 
 #if defined(__SAM3X8E__)
@@ -11,7 +11,7 @@
 #endif
 
 #ifndef USE_ADAFRUIT_SHIELD_PINOUT 
- #error "This sketch is intended for use with the TFT LCD Shield. Make sure that USE_ADAFRUIT_SHIELD_PINOUT is #defined in the Adafruit_TFTLCD.h library file."
+ #error "This sketch is intended for use with the TFT LCD Shield. Make sure that USE_ADAFRUIT_SHIELD_PINOUT is #defined in the TftSpfd5408.h library file."
 #endif
 
 // These are the pins for the shield!
@@ -53,7 +53,7 @@ TouchScreen ts = TouchScreen(XP, YP, XM, YM, 300);
 #define WHITE   0xFFFF
 
 
-Adafruit_TFTLCD tft;
+TftSpfd5408 tft;
 
 #define BOXSIZE   40
 #define PENRADIUS  4

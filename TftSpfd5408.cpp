@@ -1,5 +1,5 @@
 // IMPORTANT: LIBRARY MUST BE SPECIFICALLY CONFIGURED FOR EITHER TFT SHIELD
-// OR BREAKOUT BOARD USAGE.  SEE RELEVANT COMMENTS IN Adafruit_TFTLCD.h
+// OR BREAKOUT BOARD USAGE.  SEE RELEVANT COMMENTS IN TftSpfd5408.h
 
 // Graphics library by ladyada/adafruit with init code from Rossum
 // MIT license
@@ -15,7 +15,7 @@
 #endif
 #include "pins_arduino.h"
 #include "wiring_private.h"
-#include "Adafruit_TFTLCD.h"
+#include "TftSpfd5408.h"
 #include "pin_magic.h"
 
 //#define TFTWIDTH   320
@@ -35,7 +35,7 @@
 
 // Constructor for breakout board (configurable LCD control lines).
 // Can still use this w/shield, but parameters are ignored.
-Adafruit_TFTLCD::Adafruit_TFTLCD(
+TftSpfd5408::TftSpfd5408(
   uint8_t cs, uint8_t cd, uint8_t wr, uint8_t rd, uint8_t reset) :
   Adafruit_GFX(TFTWIDTH, TFTHEIGHT) {
 
@@ -88,12 +88,12 @@ Adafruit_TFTLCD::Adafruit_TFTLCD(
 }
 
 // Constructor for shield (fixed LCD control lines)
-Adafruit_TFTLCD::Adafruit_TFTLCD(void) : Adafruit_GFX(TFTWIDTH, TFTHEIGHT) {
+TftSpfd5408::TftSpfd5408(void) : Adafruit_GFX(TFTWIDTH, TFTHEIGHT) {
   init();
 }
 
 // Initialization common to both shield & breakout configs
-void Adafruit_TFTLCD::init(void) {
+void TftSpfd5408::init(void) {
 
 #ifdef USE_ADAFRUIT_SHIELD_PINOUT
   CS_IDLE; // Set all control bits to idle state
@@ -248,7 +248,7 @@ static const uint16_t ILI932x_regValues[] PROGMEM = {
   ILI932X_DISP_CTRL1       , 0x0133, // Main screen turn on
 };
 
-void Adafruit_TFTLCD::begin(uint16_t id) {
+void TftSpfd5408::begin(uint16_t id) {
   uint8_t i = 0;
 
   reset();
@@ -343,7 +343,7 @@ void Adafruit_TFTLCD::begin(uint16_t id) {
   }
 }
 
-void Adafruit_TFTLCD::reset(void) {
+void TftSpfd5408::reset(void) {
 
   CS_IDLE;
 //  CD_DATA;
@@ -373,7 +373,7 @@ void Adafruit_TFTLCD::reset(void) {
 // Sets the LCD address window (and address counter, on 932X).
 // Relevant to rect/screen fills and H/V lines.  Input coordinates are
 // assumed pre-sorted (e.g. x2 >= x1).
-void Adafruit_TFTLCD::setAddrWindow(int x1, int y1, int x2, int y2) {
+void TftSpfd5408::setAddrWindow(int x1, int y1, int x2, int y2) {
   CS_ACTIVE;
   if(driver == ID_932X) {
 
@@ -455,7 +455,7 @@ void Adafruit_TFTLCD::setAddrWindow(int x1, int y1, int x2, int y2) {
 // to save a few register writes on each pixel drawn, the lower-right
 // corner of the address window is reset after most fill operations, so
 // that drawPixel only needs to change the upper left each time.
-void Adafruit_TFTLCD::setLR(void) {
+void TftSpfd5408::setLR(void) {
   CS_ACTIVE;
   writeRegisterPair(HX8347G_COLADDREND_HI, HX8347G_COLADDREND_LO, _width  - 1);
   writeRegisterPair(HX8347G_ROWADDREND_HI, HX8347G_ROWADDREND_LO, _height - 1);
@@ -465,7 +465,7 @@ void Adafruit_TFTLCD::setLR(void) {
 // Fast block fill operation for fillScreen, fillRect, H/V line, etc.
 // Requires setAddrWindow() has previously been called to set the fill
 // bounds.  'len' is inclusive, MUST be >= 1.
-void Adafruit_TFTLCD::flood(uint16_t color, uint32_t len) {
+void TftSpfd5408::flood(uint16_t color, uint32_t len) {
   uint16_t blocks;
   uint8_t  i, hi = color >> 8,
               lo = color;
@@ -521,7 +521,7 @@ void Adafruit_TFTLCD::flood(uint16_t color, uint32_t len) {
   CS_IDLE;
 }
 
-void Adafruit_TFTLCD::drawFastHLine(int16_t x, int16_t y, int16_t length,
+void TftSpfd5408::drawFastHLine(int16_t x, int16_t y, int16_t length,
   uint16_t color)
 {
   int16_t x2;
@@ -546,7 +546,7 @@ void Adafruit_TFTLCD::drawFastHLine(int16_t x, int16_t y, int16_t length,
   else                  setLR();
 }
 
-void Adafruit_TFTLCD::drawFastVLine(int16_t x, int16_t y, int16_t length,
+void TftSpfd5408::drawFastVLine(int16_t x, int16_t y, int16_t length,
   uint16_t color)
 {
   int16_t y2;
@@ -570,7 +570,7 @@ void Adafruit_TFTLCD::drawFastVLine(int16_t x, int16_t y, int16_t length,
   else                  setLR();
 }
 
-void Adafruit_TFTLCD::fillRect(int16_t x1, int16_t y1, int16_t w, int16_t h, 
+void TftSpfd5408::fillRect(int16_t x1, int16_t y1, int16_t w, int16_t h, 
   uint16_t fillcolor) {
   int16_t  x2, y2;
 
@@ -601,7 +601,7 @@ void Adafruit_TFTLCD::fillRect(int16_t x1, int16_t y1, int16_t w, int16_t h,
   else                  setLR();
 }
 
-void Adafruit_TFTLCD::fillScreen(uint16_t color) {
+void TftSpfd5408::fillScreen(uint16_t color) {
   
   if(driver == ID_932X) {
 
@@ -632,7 +632,7 @@ void Adafruit_TFTLCD::fillScreen(uint16_t color) {
   flood(color, (long)TFTWIDTH * (long)TFTHEIGHT);
 }
 
-void Adafruit_TFTLCD::drawPixel(int16_t x, int16_t y, uint16_t color) {
+void TftSpfd5408::drawPixel(int16_t x, int16_t y, uint16_t color) {
 
   // Clip
   if((x < 0) || (y < 0) || (x >= _width) || (y >= _height)) return;
@@ -692,7 +692,7 @@ void Adafruit_TFTLCD::drawPixel(int16_t x, int16_t y, uint16_t color) {
 // externally by BMP examples.  Assumes that setWindowAddr() has
 // previously been set to define the bounds.  Max 255 pixels at
 // a time (BMP examples read in small chunks due to limited RAM).
-void Adafruit_TFTLCD::pushColors(uint16_t *data, uint8_t len, boolean first) {
+void TftSpfd5408::pushColors(uint16_t *data, uint8_t len, boolean first) {
   uint16_t color;
   uint8_t  hi, lo;
   CS_ACTIVE;
@@ -716,7 +716,7 @@ void Adafruit_TFTLCD::pushColors(uint16_t *data, uint8_t len, boolean first) {
   CS_IDLE;
 }
 
-void Adafruit_TFTLCD::setRotation(uint8_t x) {
+void TftSpfd5408::setRotation(uint8_t x) {
 
   // Call parent rotation func first -- sets up rotation flags, etc.
   Adafruit_GFX::setRotation(x);
@@ -807,7 +807,7 @@ void Adafruit_TFTLCD::setRotation(uint8_t x) {
 // the read operation, reads the data, then restores the ports to the write
 // configuration.  Write operations happen a LOT, so it's advantageous to
 // leave the ports in that state as a default.
-uint16_t Adafruit_TFTLCD::readPixel(int16_t x, int16_t y) {
+uint16_t TftSpfd5408::readPixel(int16_t x, int16_t y) {
 
   if((x < 0) || (y < 0) || (x >= _width) || (y >= _height)) return 0;
 
@@ -871,7 +871,7 @@ uint16_t Adafruit_TFTLCD::readPixel(int16_t x, int16_t y) {
 }
 
 // Ditto with the read/write port directions, as above.
-uint16_t Adafruit_TFTLCD::readID(void) {
+uint16_t TftSpfd5408::readID(void) {
 
   uint8_t hi, lo;
 
@@ -919,7 +919,7 @@ uint16_t Adafruit_TFTLCD::readID(void) {
   return id;
 }
 
-uint32_t Adafruit_TFTLCD::readReg(uint8_t r) {
+uint32_t TftSpfd5408::readReg(uint8_t r) {
   uint32_t id;
   uint8_t x;
 
@@ -950,7 +950,7 @@ uint32_t Adafruit_TFTLCD::readReg(uint8_t r) {
 }
 
 // Pass 8-bit (each) R,G,B, get back 16-bit packed color
-uint16_t Adafruit_TFTLCD::color565(uint8_t r, uint8_t g, uint8_t b) {
+uint16_t TftSpfd5408::color565(uint8_t r, uint8_t g, uint8_t b) {
   return ((r & 0xF8) << 8) | ((g & 0xFC) << 3) | (b >> 3);
 }
 
@@ -958,13 +958,13 @@ uint16_t Adafruit_TFTLCD::color565(uint8_t r, uint8_t g, uint8_t b) {
 // versions that reference the inline macros just once:
 
 #ifndef write8
-void Adafruit_TFTLCD::write8(uint8_t value) {
+void TftSpfd5408::write8(uint8_t value) {
   write8inline(value);
 }
 #endif
 
 #ifdef read8isFunctionalized
-uint8_t Adafruit_TFTLCD::read8fn(void) {
+uint8_t TftSpfd5408::read8fn(void) {
   uint8_t result;
   read8inline(result);
   return result;
@@ -972,37 +972,37 @@ uint8_t Adafruit_TFTLCD::read8fn(void) {
 #endif
 
 #ifndef setWriteDir
-void Adafruit_TFTLCD::setWriteDir(void) {
+void TftSpfd5408::setWriteDir(void) {
   setWriteDirInline();
 }
 #endif
 
 #ifndef setReadDir
-void Adafruit_TFTLCD::setReadDir(void) {
+void TftSpfd5408::setReadDir(void) {
   setReadDirInline();
 }
 #endif
 
 #ifndef writeRegister8
-void Adafruit_TFTLCD::writeRegister8(uint8_t a, uint8_t d) {
+void TftSpfd5408::writeRegister8(uint8_t a, uint8_t d) {
   writeRegister8inline(a, d);
 }
 #endif
 
 #ifndef writeRegister16
-void Adafruit_TFTLCD::writeRegister16(uint16_t a, uint16_t d) {
+void TftSpfd5408::writeRegister16(uint16_t a, uint16_t d) {
   writeRegister16inline(a, d);
 }
 #endif
 
 #ifndef writeRegisterPair
-void Adafruit_TFTLCD::writeRegisterPair(uint8_t aH, uint8_t aL, uint16_t d) {
+void TftSpfd5408::writeRegisterPair(uint8_t aH, uint8_t aL, uint16_t d) {
   writeRegisterPairInline(aH, aL, d);
 }
 #endif
 
 
-void Adafruit_TFTLCD::writeRegister24(uint8_t r, uint32_t d) {
+void TftSpfd5408::writeRegister24(uint8_t r, uint32_t d) {
   CS_ACTIVE;
   CD_COMMAND;
   write8(r);
@@ -1018,7 +1018,7 @@ void Adafruit_TFTLCD::writeRegister24(uint8_t r, uint32_t d) {
 }
 
 
-void Adafruit_TFTLCD::writeRegister32(uint8_t r, uint32_t d) {
+void TftSpfd5408::writeRegister32(uint8_t r, uint32_t d) {
   CS_ACTIVE;
   CD_COMMAND;
   write8(r);

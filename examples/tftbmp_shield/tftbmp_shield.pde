@@ -5,7 +5,7 @@
 // If in doubt, update the library to use 'soft' SPI.
 
 #include <Adafruit_GFX.h>    // Core graphics library
-#include <Adafruit_TFTLCD.h> // Hardware-specific library
+#include <TftSpfd5408.h> // Hardware-specific library
 #include <SD.h>
 
 // In the SD card, place 24 bit color BMP files (be sure they are 24-bit!)
@@ -13,7 +13,7 @@
 
 #define SD_CS 5 // Card select for shield use
 
-Adafruit_TFTLCD tft;
+TftSpfd5408 tft;
 uint8_t         spi_save;
 
 void setup()

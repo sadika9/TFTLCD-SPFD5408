@@ -19,12 +19,12 @@
 
 //#define USE_ADAFRUIT_SHIELD_PINOUT 1
 
-class Adafruit_TFTLCD : public Adafruit_GFX {
+class TftSpfd5408 : public Adafruit_GFX {
 
  public:
 
-  Adafruit_TFTLCD(uint8_t cs, uint8_t cd, uint8_t wr, uint8_t rd, uint8_t rst);
-  Adafruit_TFTLCD(void);
+  TftSpfd5408(uint8_t cs, uint8_t cd, uint8_t wr, uint8_t rd, uint8_t rst);
+  TftSpfd5408(void);
 
   void     begin(uint16_t id = 0x9325);
   void     drawPixel(int16_t x, int16_t y, uint16_t color);
