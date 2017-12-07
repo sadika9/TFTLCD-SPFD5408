@@ -176,11 +176,6 @@
     DELAY7;                                           \
     result = ((PINH & B00011000) << 3) | ((PINE & B00001000) << 2) | ((PING & B00100000) >> 1) |((PINE & B00110000) >> 2) | ((PINH & B01100000) >> 5); \
     RD_IDLE; }
-  #define read8inline(result) { \
-    RD_ACTIVE;                  \
-    DELAY7;                     \
-    result = PINA;              \
-    RD_IDLE; }
   // Changed to works with SPFD5408, based in post by Buhosoft (http://forum.arduino.cc/index.php?topic=292777.0)
   #define setWriteDirInline() { DDRE |=  B00111000; DDRG |=  B00100000; DDRH |= B01111000;}
   // Changed to works with SPFD5408, based in post by Buhosoft (http://forum.arduino.cc/index.php?topic=292777.0)
