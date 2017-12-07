@@ -57,7 +57,10 @@ void setup(void) {
 
   tft.reset();
 
-  tft.begin(0x9341);
+  uint16_t id;
+  id = tft.readID();
+  Serial.print("ChipID is 0x");Serial.println(id, HEX);
+  tft.begin(id);
 
   Serial.println(F("Benchmark                Time (microseconds)"));
 
