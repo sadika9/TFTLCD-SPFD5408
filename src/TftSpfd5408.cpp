@@ -929,7 +929,7 @@ uint32_t TftSpfd5408::readReg(uint8_t r) {
   write8(r);
   setReadDir();  // Set up LCD data port(s) for READ operations
   CD_DATA;
-  delayMicroseconds(50);
+  delayMicroseconds(500);
   read8(x);
   id = x;          // Do not merge or otherwise simplify
   id <<= 8;              // these lines.  It's an unfortunate
