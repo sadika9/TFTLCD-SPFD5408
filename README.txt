@@ -1,3 +1,6 @@
+**This library is no longer maintained**
+I do not have access to this display anymore, therefore I'm unable to maintain this library.
+
 **Note:**
 * Modified to work with SPFD5408 - based on https://github.com/JoaoLopesF/SPFD5408 *
 
